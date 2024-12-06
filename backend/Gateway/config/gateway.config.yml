@@ -1,0 +1,81 @@
+http:
+  port: 8900
+
+admin:
+  port: 9877
+  host: localhost
+
+apiEndpoints:
+  service1:
+    host: localhost
+    paths: /tasks
+  service2:
+    host: localhost
+    paths: /postTask
+  service3:
+    host: localhost
+    paths: /getTask/*
+  service4:
+    host: localhost
+    paths: /putTask/*
+  service5:
+    host: localhost
+    paths: /deleteTask/*
+
+serviceEndpoints:
+  microservice1:
+    url: http://localhost:8005
+  microservice2:
+    url: http://localhost:8006
+  microservice3:
+    url: http://localhost:8007
+  microservice4:
+    url: http://localhost:8008
+  microservice5:
+    url: http://localhost:8009
+
+policies:
+  - proxy
+  - cors
+  - log
+
+pipelines:
+  service1_pipeline:
+    apiEndpoints:
+      - service1
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: microservice1
+
+  service2_pipeline:
+    apiEndpoints:
+      - service2
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: microservice2
+
+  service3_pipeline:
+    apiEndpoints:
+      - service3
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: microservice3
+
+  service4_pipeline:
+    apiEndpoints:
+      - service4
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: microservice4
+
+  service5_pipeline:
+    apiEndpoints:
+      - service5
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: microservice5
